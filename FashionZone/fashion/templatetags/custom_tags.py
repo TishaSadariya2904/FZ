@@ -9,7 +9,6 @@ def applydiscount(pid):
     price = float(data.price) * (100 - int(data.discount))/100
     return price
 
-
 @register.filter()
 def productimage(pid):
     data = Product.objects.get(id=pid)

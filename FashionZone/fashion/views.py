@@ -408,8 +408,36 @@ def admin_dashboard(request):
     return render(request, 'admin_dashboard.html', locals())
 
 def contact(request):
-    return render(request, 'contact.html')
+    error = ""
+    if request.method=='POST':
+        f = request.POST['fname']
+        l = request.POST['lname']
+        c = request.POST['contact']
+        m = request.POST['message']
+
+        try:
+            ContactUs.objects.create(fname=f,lname=l,mobile=c,message=m)
+            error="no"
+        except:
+            error="yes"
+    d = {'error':error}
+    return render(request,'contact.html',d)
 
 def about(request):
     return render(request, 'about.html')
+
+
+def manage_contact(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    data = ContactUs.objects.all()
+    d = {'data':data}
+    return render(request, 'manage_contact.html', d)
+
+def delete_contact(request,pid):
+    if not request.user.is_authenticated:
+        return redirect('delete_contact')
+    contactus = ContactUs.objects.get(id=pid)
+    contactus.delete()
+    return redirect('manage_contact')
 

@@ -32,15 +32,18 @@
       </div>
       <div class="col2 column2 last">
         <div class="sec2innercont">
+          {% comment %}
           <div class="sec2addr">
             <p>HN. 00, Your full address with pin code.</p>
             <p><span class="collig">Phone :</span> Your Phone Number</p>
             <p><span class="collig">Email :</span> You Email ID</p>
             <p><span class="collig">Fax :</span> Your Fax Number</p>
           </div>
+          {% endcomment %}
         </div>
         <div class="sec2contactform">
-          <h3 class="sec2frmtitle">Want to Know More?? Drop Us a Mail</h3>
+          <h3 class="sec2frmtitle">Want to Know More?? Drop Us a Message</h3>
+          {% comment %}
           <form action="">
             <div class="clearfix">
               <input class="col2 first" type="text" placeholder="FirstName">
@@ -55,6 +58,24 @@
             </div>
             <div class="clearfix"><input type="submit" value="Send"></div>
           </form>
+          {% endcomment %}
+          <form class="container mt-5" method="post" name="contact-us">
+            {% csrf_token %}
+            <label>First Name</label>
+            <input type="text" class="form-control" name="fname" placeholder="Enter First Name" required>
+        
+            <label>Last Name</label>
+            <input type="text" class="form-control" name="lname" placeholder="Enter Last Name" required>
+        
+            <label>Contact Number</label>
+            <input type="text" class="form-control" name="contact" pattern="[0-9]{10}" placeholder="Enter Contact Number" required>
+        
+            <label>Message</label>
+            <textarea name="message" class="form-control" placeholder="Enter Message" required></textarea>
+
+            <div class="clearfix"><input type="submit" value="Send"></div>
+        
+        </form>
         </div>
 
       </div>
@@ -63,3 +84,24 @@
   </div>
 </div>
 </body>
+
+
+{% if error == "no" %}
+<script>
+    alert("Successful");
+    //swal("Contact Us", "Successful", "success", 100000);
+    //swal({
+    //    title: " contact us ",
+    //    text: " Successfully ",
+    //    icon: "success",
+    //    button: "ok",
+    //}, 10000000);
+    
+    window.location = ("{% url 'main' %}")
+</script>
+{% endif %} {% if error == "yes" %}
+<script>
+    alert("Something went wrong, Try Again...");
+</script>
+{% endif %}
+

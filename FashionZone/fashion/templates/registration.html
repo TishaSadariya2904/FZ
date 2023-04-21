@@ -1,18 +1,18 @@
 {% load static %}
 <html>
 <head>
-    <script>
-    function checkpass()
-    {
-        if(document.signup.pwd.value!=document.signup.cpwd.value)
-        {
-            alert('Password and Repeat Password field does not match');
-            document.signup.cpwd.focus();
-            return false;
-        }
-        return true;
-    }
 
+    <script>
+        function checkpass()
+        {
+            if(document.signup.pwd.value!=document.signup.cpwd.value)
+            {
+                alert('Password and Repeat Password field does not match');
+                document.signup.cpwd.focus();
+                return false;
+            }
+            return true;
+        }
     </script>
 
 </head>
@@ -32,14 +32,14 @@
                         <div class="form-group">
                             <label>First Name</label>
                             <input type="text" name="fname" placeholder="Enter First Name" class="form-control"
-                                   pattern="[A-Za-z]+">
+                                   pattern="[A-Za-z]+" required>
                         </div>
                     </div>
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Last Name</label>
                             <input type="text" name="lname" placeholder="Enter Last Name" class="form-control"
-                                   pattern="[A-Za-z]+">
+                                   pattern="[A-Za-z]+" required>
                         </div>
                     </div>
 
@@ -54,7 +54,7 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Contact</label>
-                            <input type="text" name="mobile" placeholder="Contact Number" required
+                            <input type="text" name="mobile" placeholder="Contact Number" required pattern="[0-9]{10}"
                                    class="form-control">
                         </div>
                     </div>
@@ -63,33 +63,33 @@
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Password</label>
-                            <input type="password" name="password" placeholder="Enter Password" class="form-control">
+                            <input type="password" name="password" placeholder="Enter Password" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="col-sm-6">
                         <div class="form-group">
                             <label>Confirm Password</label>
-                            <input type="password" name="cpwd" placeholder="Enter Password Again" class="form-control">
+                            <input type="password" name="cpwd" placeholder="Enter Password Again" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Upload PIC</label>
-                            <input type="file" name="image" class="form-control">
+                            <input type="file" name="image" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="col-sm-12">
                         <div class="form-group">
                             <label>Address</label>
-                            <textarea name="address" class="form-control" placeholder="Full Address"></textarea>
+                            <textarea name="address" class="form-control" placeholder="Full Address" required></textarea>
                         </div>
                     </div>
 
                 </div>
-                <input type="submit" value="Submit" class="m-2 px-3 btn btn-primary">
+                <input href="{% url 'userlogin' %}" type="submit" value="Submit" class="m-2 px-3 btn btn-primary">
             </form>
         </div>
     </div>

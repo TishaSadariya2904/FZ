@@ -35,9 +35,7 @@ View {{category.name}} Product</h4>
                       <div class="card-body">
                         <h6 class="card-title">{{j.name}} Rs.
                           <del>{{j.price}}</del>
-                          { {% comment "" %}
                           {{j.id|applydiscount}}
-                          {% endcomment %} }
                         </h6>
                         <p class="card-text" style="font-size:14px">{{j.description}}</p>
                         <a href="/add-to-cart/{{j.id}}/" class="btn btn-primary">

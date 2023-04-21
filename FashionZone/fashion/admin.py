@@ -10,3 +10,5 @@ admin.site.register(UserProfile)
 admin.site.register(Cart)
 admin.site.register(Booking)
 admin.site.register(Feedback)
+
+admin.site.register(ContactUs) 

@@ -92,3 +92,13 @@ class Feedback(models.Model):
 
     def __str__(self):
         return self.user.username
+
+class ContactUs(models.Model):
+    fname = models.CharField(max_length=50)
+    lname = models.CharField(max_length=50)
+    mobile = models.CharField(max_length=11,null=True)
+    message = models.CharField(max_length=100)
+
+    def _str_(self):
+        return self.title
+
