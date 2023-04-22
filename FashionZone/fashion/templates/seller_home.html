@@ -50,38 +50,37 @@
             <img src="{% static 'images/logo.jfif' %}" width="80" height="80"
                  class="mr-3 rounded-circle img-thumbnail shadow-sm">
             <div class="media-body">
-                <h4 class="mb-0">Admin</h4>
-                <p class="text-muted mb-0">{{request.user.email}}</p>
+                <h4 class="mb-0">Seller</h4>
+                <p class="text-muted mb-0">{{ user.username }}</p>
             </div>
         </div>
     </div>
     <!--.flex-column to display the flex items vertically (on top of each other)-->
     <ul class="nav flex-column bg-white">
         <li class="nav-item">
-            <a href="/admindashboard/" class="nav-link text-dark bg-light">
+            <a href="{% url 'seller_dashboard' %}" class="nav-link text-dark bg-light">
                 <i class="fas fa-tachometer-alt fa-fw mr-3 text-primary"></i>
-                Dashboard
+                Seller Dashboard
             </a>
         </li>
-        <!--fa-fw class is used to set icons at a fixed width. This class is useful when different icon widths throw off alignment-->
-       
+
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark bg-light" href="#" id="navbardrop" data-toggle="dropdown">
                 <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i> Category
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/add-category/">Add Category</a>
-                <a class="dropdown-item" href="/view-category/">View Category</a>
+                <a class="dropdown-item" href="/sadd-category/">Add Category</a>
+                <a class="dropdown-item" href="/sview-category/">View Category</a>
             </div>
         </li>
-       
+
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle text-dark bg-light" href="#" id="navbardrop" data-toggle="dropdown">
                 <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i> Manage Product
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'add_product' %}">Add Product</a>
-                <a class="dropdown-item" href="{% url 'view_product' %}">View Product</a>
+                <a class="dropdown-item" href="{% url 'sadd_product' %}">Add Product</a>
+                <a class="dropdown-item" href="{% url 'sview_product' %}">View Product</a>
             </div>
         </li>
 
@@ -90,7 +89,7 @@
                 <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i> Manage User
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/manage-user/">View User</a>
+                <a class="dropdown-item" href="/smanage-user/">View User</a>
             </div>
         </li>
 
@@ -99,7 +98,7 @@
                 <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i> Manage Contact
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/manage_contact/">View Contact</a>
+                <a class="dropdown-item" href="/smanage_contact/">View Contact</a>
             </div>
         </li>
 
@@ -108,13 +107,13 @@
                 <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i>Manage Order
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/manage-order/?action=1">New Order</a>
-                <a class="dropdown-item" href="/manage-order/?action=2">Dispatch Order</a>
-                <a class="dropdown-item" href="/manage-order/?action=3">On the way</a>
-                <a class="dropdown-item" href="/manage-order/?action=4">Delivered Order</a>
-                <a class="dropdown-item" href="/manage-order/?action=5">Cancel Order</a>
-                <a class="dropdown-item" href="/manage-order/?action=6">Return Order</a>
-                <a class="dropdown-item" href="/manage-order/?action=0">All Order</a>
+                <a class="dropdown-item" href="/smanage-order/?action=1">New Order</a>
+                <a class="dropdown-item" href="/smanage-order/?action=2">Dispatch Order</a>
+                <a class="dropdown-item" href="/smanage-order/?action=3">On the way</a>
+                <a class="dropdown-item" href="/smanage-order/?action=4">Delivered Order</a>
+                <a class="dropdown-item" href="/smanage-order/?action=5">Cancel Order</a>
+                <a class="dropdown-item" href="/smanage-order/?action=6">Return Order</a>
+                <a class="dropdown-item" href="/smanage-order/?action=0">All Order</a>
             </div>
         </li>
 
@@ -123,25 +122,20 @@
                 <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i>Manage Feedback
             </a>
             <div class="dropdown-menu">
-                <a class="dropdown-item" href="/manage-feedback/?action=1">Read Feedback</a>
-                <a class="dropdown-item" href="/manage-feedback/?action=2">Unread Feedback</a>
-            </div>
-        </li>
-
-        <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-dark bg-light" href="#" id="navbardrop" data-toggle="dropdown">
-                <i class="fas fa-chart-bar mr-3 text-primary fa-fw"></i>Seller Status
-            </a>
-            <div class="dropdown-menu">
-                <a class="dropdown-item" href="{% url 'seller_pending' %}">Pending</a>
-                <a class="dropdown-item" href="{% url 'seller_accepted' %}">Accepted</a>
-                <a class="dropdown-item" href="{% url 'seller_rejected' %}">Rejected</a>
-                <a class="dropdown-item" href="{% url 'seller_all' %}">All Seller</a>
+                <a class="dropdown-item" href="/smanage-feedback/?action=1">Read Feedback</a>
+                <a class="dropdown-item" href="/smanage-feedback/?action=2">Unread Feedback</a>
             </div>
         </li>
 
         <li class="nav-item">
-            <a href="/admin-change-password/" class="nav-link text-dark bg-light">
+            <a href="{% url 'seller_profile' %}" class="nav-link text-dark bg-light">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-bounding-box fas fa-cog mr-3 text-primary" viewBox="0 0 16 16"><path d="M1.5 1a.5.5 0 0 0-.5.5v3a.5.5 0 0 1-1 0v-3A1.5 1.5 0 0 1 1.5 0h3a.5.5 0 0 1 0 1h-3zM11 .5a.5.5 0 0 1 .5-.5h3A1.5 1.5 0 0 1 16 1.5v3a.5.5 0 0 1-1 0v-3a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 1-.5-.5zM.5 11a.5.5 0 0 1 .5.5v3a.5.5 0 0 0 .5.5h3a.5.5 0 0 1 0 1h-3A1.5 1.5 0 0 1 0 14.5v-3a.5.5 0 0 1 .5-.5zm15 0a.5.5 0 0 1 .5.5v3a1.5 1.5 0 0 1-1.5 1.5h-3a.5.5 0 0 1 0-1h3a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 1 .5-.5z"/><path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm8-9a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/></svg>
+                Change Profile
+            </a>
+        </li>
+
+        <li class="nav-item">
+            <a href="{% url 'change_passwordseller' %}" class="nav-link text-dark bg-light">
                 <i class="fas fa-cog mr-3 text-primary fa-fw"></i>
                 Change Password
             </a>

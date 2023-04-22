@@ -1,0 +1,38 @@
+{% extends 'seller_home.html' %}
+{% block main  %}
+
+<div class="card shadow">
+    <div class="card-body">
+
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">All Contact</h5>
+        <div class="container-fluid">
+
+            <table class="table table-bordered table-sm" id="example">
+                <thead>
+                <tr>
+                    <th>Sr.No</th>
+                    <th>Name</th>
+                    <th>Contact Number</th>
+                    <th>Message</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for i in data %}
+                <tr>
+                    <td>{{ forloop.counter }}</td>
+                    <td>{{ i.fname }} {{ i.lname }}</td>
+                    <td>{{ i.mobile }}</td>
+                    <td>{{ i.message }}</td>
+                    <td><a href="{% url 'sdelete_contact' i.id %}" class="text-danger" 
+                        onclick="return confirm('Are You Sure?')">Delete</a></td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}

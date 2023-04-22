@@ -78,5 +78,41 @@ urlpatterns = [
     
     path('manage_contact/',manage_contact, name="manage_contact"),
     path('delete_contact/<int:pid>',delete_contact,name='delete_contact'),
+    
+    path('seller_pending',seller_pending,name='seller_pending'),
+    path('change_status/<int:pid>',change_status,name='change_status'),
+    path('seller_accepted',seller_accepted,name='seller_accepted'),
+    path('seller_rejected',seller_rejected,name='seller_rejected'),
+    path('seller_all',seller_all,name='seller_all'),
+    path('delete_seller/<int:pid>',delete_seller,name='delete_seller'),
+    
+    path('seller_login',seller_login,name='seller_login'),
+    path('seller_signup',seller_signup,name='seller_signup'),
+    path('seller_home',seller_home,name='seller_home'),
+    path('seller_dashboard/', seller_dashboard, name="seller_dashboard"),
+    
+    path('seller_profile',seller_profile,name='seller_profile'),
+    path('change_passwordseller',change_passwordseller,name='change_passwordseller'),
         
+    path('sadd-category/', sadd_category, name="sadd_category"),
+    path('sview-category/', sview_category, name="sview_category"),
+    path('sedit-category/<int:pid>/', sedit_category, name="sedit_category"),
+    path('sdelete-category/<int:pid>/', sdelete_category, name="sdelete_category"),
+    
+    path('sadd-product/', sadd_product, name='sadd_product'),
+    path('sview-product/', sview_product, name='sview_product'),
+    path('sedit-product/<int:pid>/', sedit_product, name="sedit_product"),
+    path('sdelete-product/<int:pid>/', sdelete_product, name="sdelete_product"),
+    
+    path('smanage-user/', smanage_user, name="smanage_user"),
+    path('sdelete-user/<int:pid>/', sdelete_user, name="sdelete_user"),
+    
+    path('smanage_contact/',smanage_contact, name="smanage_contact"),
+    path('sdelete_contact/<int:pid>',sdelete_contact,name='sdelete_contact'),
+    
+    path('smanage-feedback/', smanage_feedback, name="smanage_feedback"),
+    path('sdelete-feedback/<int:pid>/', sdelete_feedback, name="sdelete_feedback"),
+    path('sfeedback-read/<int:pid>/', sread_feedback, name="sread_feedback"),
+    
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

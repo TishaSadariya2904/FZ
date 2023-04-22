@@ -41,9 +41,6 @@ def adminLogin(request):
 def adminHome(request):
     return render(request, 'admin_base.html')
 
-def admin_dashboard(request):
-    return render(request, 'admin_dashboard.html')
-
 def add_category(request):
     if request.method == "POST":
         name = request.POST['name']
@@ -440,4 +437,279 @@ def delete_contact(request,pid):
     contactus = ContactUs.objects.get(id=pid)
     contactus.delete()
     return redirect('manage_contact')
+
+
+def seller_login(request):
+    error=""
+    if request.method == "POST":
+        u = request.POST['uname']
+        p = request.POST['pwd']
+        user = authenticate(username=u,password=p)
+        if user:
+            try:
+                user1 = Seller.objects.get(user=user)
+                if user1.utype == "seller" and user1.status!="pending":
+                    login(request,user)
+                    error="no"
+                else:
+                    error="not"
+            except:
+                error="yes"
+        else:
+            error="yes"
+    d = {'error':error}
+    return render(request,'seller_login.html',d)
+
+def seller_signup(request):
+    error = ""
+    if request.method=='POST':
+        f = request.POST['fname']
+        l = request.POST['lname']
+        c = request.POST['contact']
+        e = request.POST['email']
+        p = request.POST['pwd']
+        i = request.FILES['image']
+
+        try:
+           user = User.objects.create_user(first_name=f,last_name=l,username=e,password=p)
+           Seller.objects.create(user=user,mobile=c,image=i,utype="seller",status="pending")
+           error="no"
+        except:
+            error="yes"
+    d = {'error':error}
+    return render(request,'seller_signup.html',d)
+
+def seller_home(request):
+    if not request.user.is_authenticated:
+        return redirect('seller_login')
+    return render(request,'seller_home.html')
+
+def seller_pending(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    data = Seller.objects.filter(status="pending")
+    d = {'data':data}
+    return render(request,'seller_pending.html',d)
+
+def seller_accepted(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    data = Seller.objects.filter(status="Accept")
+    d = {'data':data}
+    return render(request,'seller_accepted.html',d)
+
+def seller_rejected(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    data = Seller.objects.filter(status="Reject")
+    d = {'data':data}
+    return render(request,'seller_rejected.html',d)
+
+def seller_all(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    data = Seller.objects.all()
+    d = {'data':data}
+    return render(request,'seller_all.html',d)
+
+def change_status(request,pid):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    error=""
+    seller = Seller.objects.get(id=pid)
+    if request.method=="POST":
+        s = request.POST['status']
+        seller.status=s
+        try:
+            seller.save()
+            error="no"
+        except:
+            error="yes"
+    d = {'seller':seller,'error':error}
+    return render(request,'change_status.html',d)
+
+def delete_seller(request,pid):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    seller = Seller.objects.get(id=pid)
+    seller.delete()
+    return redirect('seller_all')
+
+def change_passwordseller(request):
+    if not request.user.is_authenticated:
+        return redirect('seller_login')
+    error=""
+    if request.method=="POST":
+        c = request.POST['currentpassword']
+        n = request.POST['newpassword']
+        try:
+            u = User.objects.get(id=request.user.id)
+            if u.check_password(c):
+                u.set_password(n)
+                u.save()
+                error="no"
+            else:
+                error="not"
+        except:
+            error="yes"
+    d = {'error':error}
+    return render(request,'change_passwordseller.html',d)
+
+def seller_profile(request):
+    if not request.user.is_authenticated:
+        return redirect('seller_login')
+    user = request.user
+    seller = Seller.objects.get(user=user)
+
+    error = ""
+    if request.method=='POST':
+        f = request.POST['fname']
+        l = request.POST['lname']
+        c = request.POST['contact']
+
+        seller.user.first_name = f
+        seller.user.last_name = l
+        seller.mobile = c
+
+        try:
+            seller.save()
+            seller.user.save()
+            error="no"
+        except:
+            error="yes"
+
+        try:
+            i = request.FILES['image']
+            seller.image = i
+            seller.save()
+            error="no"
+        except:
+            pass
+    d = {'seller':seller,'error':error}
+    return render(request,'seller_profile.html',d)
+
+def seller_dashboard(request):
+    user = Seller.objects.filter()
+    category = Category.objects.filter()
+    product = Product.objects.filter()
+    new_order = Booking.objects.filter(status=1)
+    dispatch_order = Booking.objects.filter(status=2)
+    way_order = Booking.objects.filter(status=3)
+    deliver_order = Booking.objects.filter(status=4)
+    cancel_order = Booking.objects.filter(status=5)
+    return_order = Booking.objects.filter(status=6)
+    order = Booking.objects.filter()
+    read_feedback = Feedback.objects.filter(status=1)
+    unread_feedback = Feedback.objects.filter(status=2)
+    return render(request, 'seller_dashboard.html', locals())
+
+def sadd_category(request):
+    if request.method == "POST":
+        name = request.POST['name']
+        Category.objects.create(name=name)
+        msg = "Category added"
+    return render(request, 'sadd_category.html', locals())
+
+def sview_category(request):
+    category = Category.objects.all()
+    return render(request, 'sview_category.html', locals())
+
+def sedit_category(request, pid):
+    category = Category.objects.get(id=pid)
+    if request.method == "POST":
+        name = request.POST['name']
+        category.name = name
+        category.save()
+        msg = "Category Updated"
+    return render(request, 'sedit_category.html', locals())
+
+def sdelete_category(request, pid):
+    category = Category.objects.get(id=pid)
+    category.delete()
+    return redirect('sview_category')
+
+def sadd_product(request):
+    category = Category.objects.all()
+    if request.method == "POST":
+        name = request.POST['name']
+        price = request.POST['price']
+        cat = request.POST['category']
+        discount = request.POST['discount']
+        desc = request.POST['desc']
+        image = request.FILES['image']
+        catobj = Category.objects.get(id=cat)
+        Product.objects.create(name=name, price=price, discount=discount, category=catobj, description=desc, image=image)
+        messages.success(request, "Product added")
+    return render(request, 'sadd_product.html', locals())
+
+def sview_product(request):
+    product = Product.objects.all()
+    return render(request, 'sview_product.html', locals())
+
+def sedit_product(request, pid):
+    product = Product.objects.get(id=pid)
+    category = Category.objects.all()
+    if request.method == "POST":
+        name = request.POST['name']
+        price = request.POST['price']
+        cat = request.POST['category']
+        discount = request.POST['discount']
+        desc = request.POST['desc']
+        try:
+            image = request.FILES['image']
+            product.image = image
+            product.save()
+        except:
+            pass
+        catobj = Category.objects.get(id=cat)
+        Product.objects.filter(id=pid).update(name=name, price=price, discount=discount, category=catobj, description=desc)
+        messages.success(request, "Product Updated")
+    return render(request, 'sedit_product.html', locals())
+
+def sdelete_product(request, pid):
+    product = Product.objects.get(id=pid)
+    product.delete()
+    messages.success(request, "Product Deleted")
+    return redirect('sview_product')
+
+def smanage_user(request):
+    user = UserProfile.objects.all()
+    return render(request, 'smanage_user.html', locals()) 
+
+def sdelete_user(request, pid):
+    user = User.objects.get(id=pid)
+    user.delete()
+    messages.success(request, "User deleted successfully")
+    return redirect('smanage_user') 
+
+def smanage_contact(request):
+    if not request.user.is_authenticated:
+        return redirect('admin_login')
+    data = ContactUs.objects.all()
+    d = {'data':data}
+    return render(request, 'smanage_contact.html', d)
+
+def sdelete_contact(request,pid):
+    if not request.user.is_authenticated:
+        return redirect('sdelete_contact')
+    contactus = ContactUs.objects.get(id=pid)
+    contactus.delete()
+    return redirect('smanage_contact')
+
+def smanage_feedback(request):
+    action = request.GET.get('action', 0)
+    feedback = Feedback.objects.filter(status=int(action))
+    return render(request, 'smanage_feedback.html', locals())
+
+def sdelete_feedback(request, pid):
+    feedback = Feedback.objects.get(id=pid)
+    feedback.delete()
+    messages.success(request, "Deleted successfully")
+    return redirect('smanage_feedback')
+
+def sread_feedback(request, pid):
+    feedback = Feedback.objects.get(id=pid)
+    feedback.status = 1
+    feedback.save()
+    return HttpResponse(json.dumps({'id':1, 'status':'success'}), content_type="application/json")
 

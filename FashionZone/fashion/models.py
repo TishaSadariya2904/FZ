@@ -10,8 +10,8 @@ class Carousel(models.Model):
     
     def __str__(self):
         return self.title
-'''
-CATEGORYNAME = (
+
+'''CATEGORYNAME = (
     (1, "Clothes"),
     (2, "Jewellery"),
     (3, "Shoes"),
@@ -22,6 +22,7 @@ CATEGORYNAME = (
     (8, "Bags")
 )
 '''
+
 class Category(models.Model):
     name = models.CharField(max_length=100, null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
@@ -68,6 +69,7 @@ ORDERSTATUS = (
     (5, "Cancel"),
     (6, "Return")
 )
+
 class Booking(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     product = models.TextField(default={'objects': []}, null=True, blank=True)
@@ -83,6 +85,7 @@ STATUS = (
     (1, "Read"),
     (2, "Unread")
 )
+
 class Feedback(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     message = models.TextField(null=True, blank=True)
@@ -102,3 +105,13 @@ class ContactUs(models.Model):
     def _str_(self):
         return self.title
 
+class Seller(models.Model):
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    mobile = models.CharField(max_length=11,null=True)
+    image = models.FileField(null=True)
+    utype = models.CharField(max_length=15)
+    status = models.CharField(max_length=20)
+
+    def _str_(self):
+        return self.user.username
+    
