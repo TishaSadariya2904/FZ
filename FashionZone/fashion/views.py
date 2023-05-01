@@ -35,7 +35,9 @@ def adminLogin(request):
                 msg = "Invalid Credentials"
         except:
             msg = "Invalid Credentials"
-    dic = {'msg': msg}
+    scount = Seller.objects.all().count()
+    ccount = ContactUs.objects.all().count()
+    dic = {'msg': msg, 'scount':scount, 'ccount':ccount}
     return render(request, 'admin_login.html', dic)
 
 def adminHome(request):
