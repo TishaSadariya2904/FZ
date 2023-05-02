@@ -11,6 +11,16 @@ Admin
     delete user
 
 
-
-pdf,csv download uplod
-bulk uplod download
+INSERT INTO `fashion_product` (`id`, `name`, `image`, `description`, `price`, `discount`, `updated`, `created`, `category_id`) VALUES
+(1, 'Black Man shirt', '71aQIPEiPwL._UL1500__AYVVHOV.jpg', 'dark Black man shirt', '1000', '10', '2023-05-02 19:10:38.302732', '2023-05-02 19:10:38.302732', 1),
+(2, 'Nike', 'shoes_C3hNDwr.png', 'Nike comfortable shoes', '30000', '10', '2023-05-02 19:12:59.172365', '2023-05-02 19:12:59.173377', 3),
+(3, 'Rose', '4_wBqiyNs.jpg', 'Rose flavor', '500', '5', '2023-05-02 19:15:05.033556', '2023-05-02 19:15:05.033556', 9),
+(4, 'Head-phone', '1_3Q1DNYB.jpg', 'boat Head-phone', '20000', '20', '2023-05-02 19:16:24.869654', '2023-05-02 19:16:24.869654', 7),
+(5, 'girls bag', '9.jpg', 'hend bag', '12000', '2', '2023-05-02 19:17:25.545168', '2023-05-02 19:17:25.545168', 8),
+(6, 'Blue Man shirt', '81By76Ic5L._UL1500_.jpg', 'blue shirt ', '800', '5', '2023-05-02 19:18:27.856421', '2023-05-02 19:18:27.857418', 1),
+(7, 'green', '81H0ki1TX2L._UL1500_.jpg', 'green shirt for man', '900', '00', '2023-05-02 19:19:15.357701', '2023-05-02 19:19:15.357701', 1),
+(8, 'girl t-shirt', '81AuMZrtlXL._UL1500__ycD0d5S.jpg', 'woolen t-shirt ', '900', '10', '2023-05-02 19:20:45.114154', '2023-05-02 19:20:45.114154', 1),
+(9, 'girl t-shirt', '81Aa5RlufHL._UL1500__mflRzP6.jpg', 'crop top', '1200', '10', '2023-05-02 19:21:14.658137', '2023-05-02 19:21:14.658137', 1),
+(10, 'top', '91ZV6MDwl3L._UL1500_.jpg', 'fancy top ', '1000', '18', '2023-05-02 19:22:13.909671', '2023-05-02 19:22:13.909671', 1),
+(11, 'boy t-shirt', '538228-0286_1-510x649.jpeg', 'blue t-shirt for boys', '1000', '10', '2023-05-02 19:23:08.020427', '2023-05-02 19:23:08.020427', 1),
+(12, 'neckless ', 'j1.png', 'neckless', '400', '5', '2023-05-02 19:26:21.819164', '2023-05-02 19:26:21.820161', 2);

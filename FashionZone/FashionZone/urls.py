@@ -45,6 +45,7 @@ urlpatterns = [
     path('change-password/', change_password, name="change_password"),
     
     path('user-product/<int:pid>/', user_product, name="user_product"),
+    path('uuser-product/<int:pid>/', uuser_product, name="uuser_product"),
     path('product-detail/<int:pid>/', product_detail, name="product_detail"),
     
     path('add-to-cart/<int:pid>/', addToCart, name="addToCart"),
@@ -113,6 +114,14 @@ urlpatterns = [
     path('smanage-feedback/', smanage_feedback, name="smanage_feedback"),
     path('sdelete-feedback/<int:pid>/', sdelete_feedback, name="sdelete_feedback"),
     path('sfeedback-read/<int:pid>/', sread_feedback, name="sread_feedback"),
+    
+    path('forgot_password/',forgot_password,name='forgot_password'),
+    path('function_forgot/',function_forgot,name='function_forgot'),
+    path('verify/',verify,name='verify'),
+    path('reset_password/',reset_password,name='reset_password'),
+    
+    path('Function_Change/',Function_Change,name='Function_Change'),
+    path('fChange_Password/',fChange_Password,name='fChange_Password'),
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

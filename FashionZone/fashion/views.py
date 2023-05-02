@@ -4,7 +4,11 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate,login,logout
 from django.contrib import messages
 from datetime import date
-import json
+import json, random
+from django.core.mail import send_mail,EmailMultiAlternatives
+import pandas as pd
+from django.conf import settings
+import uuid
 
 
 # Create your views here.
@@ -174,9 +178,9 @@ def logoutuser(request):
 
 def change_password(request):
     if request.method == 'POST':
-        o = request.POST.get('old')
-        n = request.POST.get('new')
-        c = request.POST.get('confirm')
+        o = request.POST.get('currentpassword')
+        n = request.POST.get('newpassword')
+        c = request.POST.get('confirmpassword')
         user = authenticate(username=request.user.username, password=o)
         if user:
             if n == c:
@@ -200,6 +204,15 @@ def user_product(request,pid):
         product = Product.objects.filter(category=category)
     allcategory = Category.objects.all()
     return render(request, "user-product.html", locals())
+
+def uuser_product(request,pid):
+    if pid == 0:
+        product = Product.objects.all()
+    else:
+        category = Category.objects.get(id=pid)
+        product = Product.objects.filter(category=category)
+    allcategory = Category.objects.all()
+    return render(request, "uuser-product.html", locals())
 
 def product_detail(request, pid):
     product = Product.objects.get(id=pid)
@@ -715,3 +728,74 @@ def sread_feedback(request, pid):
     feedback.save()
     return HttpResponse(json.dumps({'id':1, 'status':'success'}), content_type="application/json")
 
+def forgot_password(request):
+    return render(request,"forgot_password.html")
+
+def reset_password(request):
+    if request.method == 'POST' :
+        new = request.POST['new']
+        old = request.POST['old']
+        if new == old :
+            email = request.session.get('Email')
+            user = User.objects.get(email=email)
+            user.password = new
+            user.save()
+            return redirect("userlogin")
+        else :
+            return redirect("reset_password")
+    return render(request,"reset_password.html")
+
+def fChange_Password(request):
+    return render(request,"fChange_Password.html")
+
+def verify(request):
+        if request.method == 'POST':
+            OTP = request.session.get('OTP')
+            email = request.session.get('Email')
+            otp = request.POST['otp']
+            user = User.objects.get(email=email)
+            if str(OTP) == otp:
+                # OTP verified successfully, redirect to the reset password page
+                
+                return redirect('reset_password')
+            else:
+                messages.error(request, 'Invalid OTP.')
+                return redirect('forgot_password')
+        return render(request,"verify.html")
+
+def function_forgot(request):
+    if request.method=="POST":
+        Email=request.POST['email']
+        try:
+            data=User.objects.get(email=Email)
+            OTP= random.randint(100000, 999999)
+            request.session['OTP'] = OTP
+            request.session['Email'] = data.email
+            topic='Mender Company'
+            data='<p style="font-style: oblique;">OTP is <b>'+str(OTP)+'</b></p>'
+            from_email='mender.company@gmail.com'
+            to_email=Email
+            msg=EmailMultiAlternatives(topic,data,from_email,[to_email])
+            msg.content_subtype='html'
+            msg.send()
+            return redirect("verify")
+        except:
+            return redirect("forgot_password")
+        
+def Function_Change(request):
+    if request.method=="POST":
+        old=request.POST['currentpassword']
+        New=request.POST['newpassword']
+        unique=request.POST['confirmpassword']
+        data=User.objects.filter(uniqueId=unique)
+        if data is not None:
+            data=User.objects.get(uniqueId=unique)
+            if old==data.password:
+                data.password=New
+                data.save()
+                return redirect(request.META.get('HTTP_REFERER'))
+            else:
+                return redirect('Change_Password')
+        else:
+                return redirect('Change_Password')
+                        

@@ -30,7 +30,7 @@
                     </td>
                     <td><a href="/product-detail/{{i}}/">{{i|productname}}</a></td>
                     
-                    <td>Rs. {{i|applydiscount}}</td>
+                    <td>Rs. {{i|applydiscount}}</td><!-- |applydiscount -->
                     
                     <td style="width:15%">
                         <div class="input-group">
@@ -39,7 +39,7 @@
                             <a href="/incredecre/{{i}}/?action=incre" class="btn btn-warning pull-right">+</a>
                         </div>
                     </td>
-                    <td id="totalprice-{{forloop.counter}}"> {% comment %} {% producttotalprice i j %} {% endcomment %} </td>
+                    <td id="totalprice-{{forloop.counter}}">{% producttotalprice i j %} {% comment %} {% producttotalprice i j %} {% endcomment %} </td>
                     <td>
                         <a href="/deletecart/{{i}}/" class="btn btn-danger"><i class="fa fa-trash-alt"></i></a>
                     </td>

@@ -44,7 +44,7 @@ class Product(models.Model):
         return self.name
 
 class UserProfile(models.Model):
-    user = models.ForeignKey (User, on_delete=models.CASCADE, null=True, blank=True)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True, blank=True)
     mobile = models.CharField(max_length=100, null=True, blank=True)
     address = models.TextField(null=True, blank=True)
     image = models.FileField(null=True, blank=True)
@@ -114,4 +114,3 @@ class Seller(models.Model):
 
     def _str_(self):
         return self.user.username
-    
