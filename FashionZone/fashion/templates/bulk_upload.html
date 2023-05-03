@@ -1,0 +1,30 @@
+
+{% extends 'admin_base.html' %}
+{% block main %}
+
+<div class="card shadow">
+    <div class="card-body">
+        <h5 class="p-2" style="border-bottom: 2px solid orange;">BulkUpload</h5>
+        <div class="container-fluid">
+            <form action="{% url 'upload_csv' %}" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name" class="col-md-3 col-sm-3 col-xs-12 control-label">FIle:</label>
+                    <div class="col-md-8">
+                        <input type="file" name="csv_file" id="csv_file" required="TRUE" class="form-control">
+                    </div>
+                </div>
+                <div>
+                <button type="submit" value="Submit" css_class="m-2 px-3 btn btn-success">csv_file </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+{% if msg %}
+<script>
+    alert('{{msg}}')
+</script>
+{% endif %}
+{% endblock %}

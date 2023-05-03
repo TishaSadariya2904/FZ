@@ -124,6 +124,10 @@ urlpatterns = [
     path('fChange_Password/',fChange_Password,name='fChange_Password'),
     
     path('pdf/',pdf,name='pdf'),
+    path('bulk_upload/',bulk_upload,name='bulk_upload'),
+    path('upload_csv/',upload_csv,name='upload_csv'),
+    
+    
     
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

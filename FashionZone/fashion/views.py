@@ -9,6 +9,7 @@ from django.core.mail import send_mail,EmailMultiAlternatives
 import pandas as pd
 from django.conf import settings
 import uuid
+from http.client import HTTPResponse
 
 
 # Create your views here.
@@ -807,3 +808,29 @@ def pdf(request):
         order = Booking.objects.filter()
         order_status = 'All'
     return render(request,"pdf.html", locals())
+
+def bulk_upload(request):
+    return render(request,"bulk_upload.html")
+
+def upload_csv(request):
+    if("GET" == request.method):
+        return HTTPResponse("Not Valid method")
+    csv_file=request.FILES["csv_file"]
+    if not csv_file.name.endswith('.csv'):
+        return HTTPResponse("File not valid")
+    if csv_file.multiple_chunks():
+        return HTTPResponse("Upload file is big")
+    file_data = csv_file.read().decode("utf-8")
+    lines = file_data.split("\n")
+    c=len(lines)
+    
+    for i in range(0,c-1):
+        fields = lines[i].splot(",")
+        data_dict = {}
+        data_dict["name"] = fields[0]
+        
+        cform=Category(data_dict)
+        if cform.is_valid():
+            cform.save()
+            messages.error(request,'Succsessfully created')
+    return redirect("view-category")
