@@ -31,7 +31,7 @@ View {{category.name}} Product</h4>
                   {% for j in product %}
                   <div class="col-md-3">
                     <div class="card" align="center" style="border:1px solid lightgrey">
-                      <img class="card-img-top img-thumbnail" src="{{j.image.url}}" style="width:100%" alt="card-img">
+                      <img class="card-img-top img-thumbnail" src="{{j.image}}" style="width:100%" alt="card-img">
                       <div class="card-body">
                         <h6 class="card-title">{{j.name}} Rs.
                           <del>{{j.price}}</del>

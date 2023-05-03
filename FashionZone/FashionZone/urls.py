@@ -123,5 +123,7 @@ urlpatterns = [
     path('Function_Change/',Function_Change,name='Function_Change'),
     path('fChange_Password/',fChange_Password,name='fChange_Password'),
     
+    path('pdf/',pdf,name='pdf'),
+    
 ]+static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

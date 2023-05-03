@@ -799,3 +799,11 @@ def Function_Change(request):
         else:
                 return redirect('Change_Password')
                         
+def pdf(request):
+    action = request.GET.get('action', 0)
+    order = Booking.objects.filter(status=int(action))
+    order_status = ORDERSTATUS[int(action)-1][1]
+    if int(action) == 0:
+        order = Booking.objects.filter()
+        order_status = 'All'
+    return render(request,"pdf.html", locals())
